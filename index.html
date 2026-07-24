@@ -80,8 +80,44 @@
   </div>
 
   <script>
-    const db={"john":500,"jim":2400,"sam":1500};
+    const STORAGE_KEY='pos-db-v1';
+    const DEFAULT_DB={"john":500,"jim":2400,"sam":1500};
+    let db=loadDb();
     let cart=[], payMethod='cash', total=0, receiptStr='', orderName='';
+    const bc=window.BroadcastChannel ? new BroadcastChannel('pos-db') : null;
+
+    function loadDb(){
+      try {
+        const saved=localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : {...DEFAULT_DB};
+      } catch {
+        return {...DEFAULT_DB};
+      }
+    }
+
+    function saveDb(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+      if(bc) bc.postMessage(JSON.stringify(db));
+    }
+
+    if(bc){
+      bc.onmessage=(event)=>{
+        try {
+          const incoming=JSON.parse(event.data);
+          db={...db, ...incoming};
+          pUpd();
+        } catch {}
+      };
+    }
+
+    window.addEventListener('storage',(event)=>{
+      if(event.key===STORAGE_KEY && event.newValue){
+        try {
+          db=JSON.parse(event.newValue);
+          pUpd();
+        } catch {}
+      }
+    });
 
     const menuPrices={
       'Big Mac®':5.89,
@@ -172,6 +208,7 @@
       } else {
         res.innerText='❌ Added new profile (0 PTS).';
         db[s]=0;
+        saveDb();
       }
     }
 
@@ -188,6 +225,7 @@
         const req=pCost();
         if(db[k]<req) return alert(`Need ${req} PTS. Balance: ${db[k]}`);
         db[k]-=req;
+        saveDb();
         msg=`POINTS\nFREE\n-${req} PTS`;
         chg=`Deducted -${req} PTS. New Bal: ${db[k]}`;
       } else {
@@ -202,6 +240,7 @@
           msg='CARD\nApproved.';
         }
         db[k]+=e;
+        saveDb();
         chg=`Added +${e} PTS. New Bal: ${db[k]}`;
       }
 
