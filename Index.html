@@ -3,21 +3,21 @@
     <div style="background:#e3f2fd;padding:8px;margin-bottom:10px;border-radius:4px;">
         <strong>🔍 Points Lookup:</strong><br>
         <input type="text" id="s-name" placeholder="Name" style="width:55%;padding:3px;">
-        <button onclick="lkup()" style="padding:3px 8px;">Search</button>
+        <button onclick="lkup()" style="padding:3px 8px;background:#ffbc0d;">Search</button>
         <div id="lk-res" style="margin-top:4px;font-weight:bold;color:#0d47a1;font-size:.8rem;"></div>
     </div>
     <h3>Order Menu</h3>
     
     <div class="cat">🍔 Burgers & Beef</div>
     <button onclick="add('Big Mac®',5.89)">Big Mac® ($5.89)</button>
-    <div class="subcat">Quarter Pounder® w/ Cheese</div>
+    <div class="subcat">Quarter Pounder® with Cheese</div>
     <button onclick="add('Quarter Pounder® (Single)',6.19)">Single ($6.19)</button>
     <button onclick="add('Quarter Pounder® (Double)',7.19)">Double ($7.19)</button>
     <button onclick="add('Quarter Pounder® (Deluxe)',6.69)">Deluxe ($6.69)</button>
-    <div class="subcat">Bacon Quarter Pounder®</div>
+    <div class="subcat">Bacon Quarter Pounder® with Cheese</div>
     <button onclick="add('Bacon QPC®',6.89)">Bacon QPC® ($6.89)</button>
-    <div class="subcat">Standard Cheeseburgers & Beef</div>
-    <button onclick="add('Double Cheeseburger',3.49)">Double Cheese ($3.49)</button>
+    <div class="subcat">Beef Classics</div>
+    <button onclick="add('Double Cheeseburger',3.49)">Double Cheeseburger ($3.49)</button>
     <button onclick="add('McDouble®',2.99)">McDouble® ($2.99)</button>
     <button onclick="add('Cheeseburger',2.29)">Cheeseburger ($2.29)</button>
     <button onclick="add('Hamburger',1.99)">Hamburger ($1.99)</button>
@@ -35,12 +35,12 @@
     <button onclick="add('McCrispy® (Spicy)',5.79)">Spicy ($5.79)</button>
     <button onclick="add('McCrispy® (Deluxe)',6.19)">Deluxe ($6.19)</button>
     <button onclick="add('McCrispy® (Spicy Deluxe)',6.49)">Spicy Deluxe ($6.49)</button>
-    <div class="subcat">Chicken Strips & Wraps</div>
-    <button onclick="add('3pc McCrispy® Strips',4.99)">3pc Strips ($4.99)</button>
-    <button onclick="add('4pc McCrispy® Strips',5.99)">4pc Strips ($5.99)</button>
+    <div class="subcat">Strips, Wraps & Crispy Chicken</div>
+    <button onclick="add('3pc McCrispy® Strips',4.99)">3-Piece Strips ($4.99)</button>
+    <button onclick="add('4pc McCrispy® Strips',5.99)">4-Piece Strips ($5.99)</button>
     <button onclick="add('McChicken®',2.89)">McChicken® ($2.89)</button>
-    <button onclick="add('Snack Wrap® (Ranch)',2.49)">Snack Wrap Ranch ($2.49)</button>
-    <button onclick="add('Snack Wrap® (Spicy)',2.49)">Snack Wrap Spicy ($2.49)</button>
+    <button onclick="add('Snack Wrap® (Ranch)',2.49)">Snack Wrap® Ranch ($2.49)</button>
+    <button onclick="add('Snack Wrap® (Spicy)',2.49)">Snack Wrap® Spicy ($2.49)</button>
     <div class="subcat">Filet-O-Fish®</div>
     <button onclick="add('Filet-O-Fish® (Single)',4.79)">Single ($4.79)</button>
     <button onclick="add('Filet-O-Fish® (Double)',5.79)">Double ($5.79)</button>
@@ -52,7 +52,7 @@
     <button onclick="add('Medium Fries®',3.49)">Medium ($3.49)</button>
     <button onclick="add('Large Fries®',4.19)">Large ($4.19)</button>
     <button onclick="add('Basket of Fries®',5.29)">Basket ($5.29)</button>
-    <div class="subcat">Greens & Fruit</div>
+    <div class="subcat">Salad & Fruit</div>
     <button onclick="add('Side Salad',3.19)">Side Salad ($3.19)</button>
     <button onclick="add('Apple Slices',1.29)">Apple Slices ($1.29)</button>
 
@@ -76,14 +76,14 @@
     <button onclick="add('Lemonade',2.19)">Lemonade ($2.19)</button>
     <button onclick="add('Fruit Smoothie',3.29)">Fruit Smoothie ($3.29)</button>
     <button onclick="add('DASANI® Water',1.59)">DASANI® Water ($1.59)</button>
-    <button onclick="add('Low-Fat Milk Jug',1.59)">Low-Fat Milk ($1.59)</button>
+    <button onclick="add('Low-Fat Milk Jug',1.59)">Low-Fat Milk Jug ($1.59)</button>
 
     <div class="cat">🍦 Desserts & Sweets</div>
     <div class="subcat">McFlurry®</div>
     <button onclick="add('McFlurry® (Oreo®)',3.89)">Oreo® ($3.89)</button>
     <button onclick="add('McFlurry® (M&M\'s®)',3.89)">M&M's® ($3.89)</button>
     <button onclick="add('McFlurry® (Seasonal)',4.19)">Seasonal Flavor ($4.19)</button>
-    <div class="subcat">Bakery & Ice Cream Cones</div>
+    <div class="subcat">Ice Cream Bakery treats</div>
     <button onclick="add('Soft Serve Cone',1.99)">Soft Serve Cone ($1.99)</button>
     <button onclick="add('Sundae',2.49)">Sundae ($2.49)</button>
     <button onclick="add('Baked Apple Pie',1.89)">Baked Apple Pie ($1.89)</button>
@@ -96,7 +96,7 @@
     <h3>Current Order</h3>
     Name: <input type="text" id="c-name" value="Jim" style="width:75%;padding:3px;"><br>
     Email: <input type="email" id="c-mail" placeholder="customer@gmail.com" style="width:75%;padding:3px;margin:4px 0;"><br>
-    <input type="checkbox" id="is-del" onchange="toggleDel()"> 🚚 Delivery Order
+    <input type="checkbox" id="is-del" onchange="toggleDel()"> <label for="is-del">🚚 Delivery Order</label>
     <input type="text" id="addr" placeholder="Address" style="display:none;width:75%;padding:3px;margin-top:4px;">
     <hr><div id="tape"></div><hr>
     <div class="row" style="font-size:1.2rem;font-weight:bold;color:#da291c;"><span>Total:</span><span id="total">$0.00</span></div>
@@ -113,7 +113,6 @@
 </div>
 <script>
     const db={"john":500,"jim":2400,"sam":1500}; let cart=[], payMethod='cash', total=0, receiptStr="", orderName="";
-    Object.keys(menu).forEach(c=>{});
     function add(n,p){let m=cart.find(c=>c.n===n); m?m.qty++:cart.push({n,p,qty:1}); render()}
     function render(){document.getElementById('tape').innerHTML=cart.map(i=>`<div class="row"><span>${i.n} x${i.qty}</span><span>$${(i.p*i.qty).toFixed(2)}</span></div>`).join(''); total=cart.reduce((s,i)=>s+(i.p*i.qty),0); document.getElementById('total').innerText=`$${total.toFixed(2)}`; if(payMethod==='points')pUpd()}
     function toggleDel(){const d=document.getElementById('is-del').checked; document.getElementById('addr').style.display=d?'block':'none'; if(payMethod==='cash'){document.getElementById('cash-box').style.display=d?'none':'block'; document.getElementById('del-warn').style.display=d?'block':'none'}}
