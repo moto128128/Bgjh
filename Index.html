@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McD POS</title>
+    <style>
+        body { font-family: sans-serif; display: flex; margin: 0; height: 100vh; background: #eee; }
+        .menu { flex: 1.2; padding: 15px; overflow-y: auto; }
+        .cat { background: #333; color: white; padding: 4px; border-radius: 4px; margin: 10px 0 5px; font-size: 0.85rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 6px; }
+        .item { background: white; padding: 8px; border: 1px solid #ccc; text-align: center; cursor: pointer; border-radius: 5px; font-size: 0.8rem; }
+        .pos { flex: 1; background: white; border-left: 2px solid #ccc; padding: 15px; display: flex; flex-direction: column; overflow-y: auto; }
+        .box { background: #f9f9f9; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; font-size: 0.85rem; }
+        .tape { flex: 1; min-height: 90px; border-bottom: 1px solid #ddd; overflow-y: auto; }
+        .row { display: flex; justify-content: space-between; margin: 3px 0; }
+        button { flex: 1; padding: 8px; cursor: pointer; font-weight: bold; border-radius: 4px; }
+        .active { background: #ffbc0d; }
+        .action { background: #da291c; color: white; width: 100%; border: none; padding: 10px; font-size: 1rem; border-radius: 5px; }
+        .rwd { background: #28a745; color: white; }
+        .ntf { background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 8px; border-radius: 5px; margin-bottom: 10px; font-size: 0.8rem; display: none; cursor: pointer; font-weight: bold; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <div id="notif" class="ntf" onclick="claimSurprise()"></div>
+        <h3>Order Entry Menu</h3>
+        <div class="cat">🍔 Burgers</div><div class="grid" id="g-burgers"></div>
+        <div class="cat">🍗 Chicken & Fish</div><div class="grid" id="g-chicken"></div>
+        <div class="cat"> Fries & Sides</div><div class="grid" id="g-sides"></div>
+        <div class="cat">🥤 Beverages</div><div class="grid" id="g-beverages"></div>
+        <div class="cat">🍦 Desserts</div><div class="grid" id="g-desserts"></div>
+    </div>
+    <div class="pos">
+        <div class="box">
+            Name: <input type="text" id="c-name" value="Jim" style="width:85%; padding:3px; margin-bottom:4px;"><br>
+            Email: <input type="email" id="c-mail" placeholder="customer@gmail.com" style="width:85%; padding:3px; margin-bottom:4px;"><br>
+            <input type="checkbox" id="is-del" onchange="toggleDel()"> <label for="is-del">🚚 Delivery Order</label>
+            <input type="text" id="addr" placeholder="Address" style="display:none; width:85%; padding:3px; margin-top:4px;">
+        </div>
+        <div class="tape" id="tape"></div>
+        <div class="row" style="font-size:1.2rem; font-weight:bold; color:#da291c; margin: 8px 0;"><span>Total:</span><span id="total">$0.00</span></div>
+        <div style="display:flex; gap:8px; margin-bottom:8px;"><button id="b-cash" class="active" onclick="setPay('cash')">💵 Cash</button><button id="b-card" onclick="setPay('card')">💳 Card</button></div>
+        <div id="cash-box" style="margin-bottom:8px;"><div id="cash-in">Paid ($): <input type="number" id="paid" step="0.01" style="width:40%;"></div><div id="del-warn" style="display:none; color:#856404; font-size:0.75rem;">⚠️ Collect cash on route.</div></div>
+        <div id="card-box" style="display:none; color:green; font-weight:bold; font-size:0.8rem; margin-bottom:8px;">Terminal Active... Swipe card.</div>
+        <button class="action" onclick="checkout()">Process Transaction</button>
+        <div id="rcpt-tools" style="display:none; gap:8px; margin-top:8px; background:#e2f0d9; padding:8px; border-radius:5px;">
+            <button onclick="sendGmail()" style="background:#da291c; color:white; border:none;">📬 Gmail</button><button onclick="downloadRcpt()" style="background:#555; color:white; border:none;">💾 Download</button>
+        </div>
+    </div>
+    <script>
+        const menu = {
+            burgers: [{id:1,n:'Big Mac®',p:5.89},{id:2,n:'Quarter Pounder®',p:6.19},{id:3,n:'Bacon QPC®',p:6.89},{id:4,n:'Double Cheese',p:3.49},{id:5,n:'McDouble®',p:2.99},{id:6,n:'Cheeseburger',p:2.29},{id:7,n:'Hamburger',p:1.99},{id:8,n:'Daily Double®',p:3.99}],
+            chicken: [{id:9,n:'McNuggets®',p:5.29},{id:10,n:'McCrispy®',p:5.49},{id:11,n:'McCrispy® Strips',p:4.99},{id:12,n:'McChicken®',p:2.89},{id:13,n:'Snack Wraps®',p:2.49},{id:14,n:'Filet-O-Fish®',p:4.79}],
+            sides: [{id:15,n:'Famous Fries®',p:3.49},{id:16,n:'Side Salad',p:3.19},{id:17,n:'Apple Slices',p:1.29},{id:101,n:'✨ Free Large Fry',p:0.00,r:1}],
+            beverages: [{id:18,n:'Fountain Drink',p:1.69},{id:19,n:'McCafé® Coffee',p:2.29},{id:20,n:'Teas & Refreshers',p:2.19},{id:21,n:'Milk & Water',p:1.59}],
+            desserts: [{id:22,n:'McFlurry®',p:3.89},{id:23,n:'Cone / Sundae',p:1.99},{id:24,n:'Baked Apple Pie',p:1.89},{id:25,n:'Cookies',p:1.79},{id:102,n:'✨ Free Apple Pie',p:0.00,r:1}]
+        };
+        let cart = [], payMethod = 'cash', total = 0, visits = 0, surpriseItem = null, receiptStr = "", orderName = "";
+        Object.keys(menu).forEach(c => { document.getElementById(`g-${c}`).innerHTML = menu[c].map(i => `<div class="item ${i.r?'rwd':''}" onclick="add(${i.id})"><h4>${i.n}</h4><b>$${i.p.toFixed(2)}</b></div>`).join(''); });
+        function add(id) { let item; Object.values(menu).forEach(c => { const f = c.find(p => p.id === id); if(f) item = f; }); let match = cart.find(c => c.id === id); match ? match.qty++ : cart.push({ ...item, qty: 1 }); render(); }
+        function render() { document.getElementById('tape').innerHTML = cart.map(i => `<div class="row"><span>${i.n} x${i.qty}</span><span>$${(i.p*i.qty).toFixed(2)}</span></div>`).join(''); total = cart.reduce((s, i) => s + (i.p * i.qty), 0); document.getElementById('total').innerText = `$${total.toFixed(2)}`; }
+        function toggleDel() { const d = document.getElementById('is-del').checked; document.getElementById('addr').style.display = d ? 'block' : 'none'; if (payMethod === 'cash') { document.getElementById('cash-in').style.display = d ? 'none' : 'block'; document.getElementById('del-warn').style.display = d ? 'block' : 'none'; } }
+        function setPay(m) { payMethod = m; document.getElementById('b-cash').className = m === 'cash' ? 'active' : ''; document.getElementById('b-card').className = m === 'card' ? 'active' : ''; const d = document.getElementById('is-del').checked; document.getElementById('cash-box').style.display = m === 'cash' ? 'block' : 'none'; document.getElementById('card-box').style.display = m === 'card' ? 'block' : 'none'; if(m==='cash') { document.getElementById('cash-in').style.display = d ? 'none' : 'block'; document.getElementById('del-warn').style.display = d ? 'block' : 'none'; } }
+        function checkSurprises(name) { visits++; const b = document.getElementById('notif'); if (visits === 2) { surpriseItem = { id: 201, n: '🎁 Milestone: Free Cheeseburger', p: 0.00 }; b.innerText = `🔔 ${name} unlocked a Free Cheeseburger! Click to claim.`; b.style.display = 'block'; } else if (visits === 4) { surpriseItem = { id: 202, n: '🎁 Milestone: Free McNuggets (4pc)', p: 0.00 }; b.innerText = `🔔 ${name} unlocked Free McNuggets! Click to claim.`; b.style.display = 'block'; } }
+        function claimSurprise() { if (!surpriseItem) return; cart.push({ ...surpriseItem, qty: 1 }); render(); document.getElementById('notif').style.display = 'none'; surpriseItem = null; }
+        function checkout() {
+            if (!cart.length) return alert("Order empty!"); orderName = document.getElementById('c-name').value.trim() || "Customer"; const d = document.getElementById('is-del').checked; if (d && !document.getElementById('addr').value.trim()) return alert("Enter address!");
+            let earned = Math.floor(total) * 100, msg = ""; if (d && payMethod === 'cash') msg = `DELIVERY\nAddr: ${document.getElementById('addr').value}\nCollect: $${total.toFixed(2)}`; else if (payMethod === 'cash') { let amt = parseFloat(document.getElementById('paid').value || 0); if (amt < total) return alert("Short cash!"); msg = `CASH\nChange: $${(amt - total).toFixed(2)}`; } else msg = "CARD\nApproved.";
+            receiptStr = `=== RECEIPT ===\nCustomer: ${orderName}\nItems:\n` + cart.map(i => `- ${i.n} x${i.qty} ($${(i.p*i.qty).toFixed(2)})`).join('\n') + `\nTotal: $${total.toFixed(2)}\nStatus: ${msg}\nLedger: Add +${earned} PTS on paper.`;
+            alert(`== SUCCESS ==\n${msg}\n\n✏️ PAPER LEDGER:\nLook up "${orderName}" on paper.\nAdd +${earned} PTS.`);
+            document.getElementById('rcpt-tools').style.display = 'flex'; checkSurprises(orderName); cart = []; document.getElementById('paid').value = ''; document.getElementById('addr').value = ''; document.getElementById('is-del').checked = false; toggleDel(); render();
+        }
+        function downloadRcpt() { const blob = new Blob([receiptStr], { type: "text/plain" }); const l = document.createElement("a"); l.href = URL.createObjectURL(blob); l.download = `Receipt_${orderName}.txt`; l.click(); }
+        function sendGmail() { const e = document.getElementById('c-mail').value.trim(); if(!e) return alert("Enter customer email!"); window.open(`https://google.com{e}&su=${encodeURIComponent('McDonalds Receipt')}&body=${encodeURIComponent(receiptStr)}`, '_blank'); }
+    </script>
+</body>
+</html>
