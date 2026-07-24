@@ -1,0 +1,81 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>POS</title><style>body{font-family:sans-serif;display:flex;margin:0;height:100vh;background:#eee}.pane{flex:1.2;padding:15px;overflow-y:auto;background:#fff;border:1px solid #ccc;margin:10px;border-radius:6px}.row{display:flex;justify-content:space-between;margin:4px 0}button{padding:8px;margin:2px;cursor:pointer;font-weight:bold;border-radius:4px;border:1px solid #ccc;background:#f8f9fa}.cat{background:#333;color:#fff;padding:4px;border-radius:4px;margin:10px 0 5px;font-size:.85rem;font-weight:bold}</style></head><body>
+<div class="pane">
+    <div style="background:#e3f2fd;padding:8px;margin-bottom:10px;border-radius:4px;">
+        <strong>🔍 Points Lookup:</strong><br>
+        <input type="text" id="s-name" placeholder="Name" style="width:55%;padding:3px;">
+        <button onclick="lkup()" style="padding:3px 8px;">Search</button>
+        <div id="lk-res" style="margin-top:4px;font-weight:bold;color:#0d47a1;font-size:.8rem;"></div>
+    </div>
+    <h3>Order Menu</h3>
+    <div class="cat">🍔 Burgers & Beef</div>
+    <button onclick="add('Big Mac®',5.89)">🍔 Big Mac® ($5.89)</button>
+    <button onclick="add('Quarter Pounder® w/ Cheese',6.19)">🍔 Quarter Pounder® ($6.19)</button>
+    <button onclick="add('Bacon QPC®',6.89)">🍔 Bacon QPC® ($6.89)</button>
+    <button onclick="add('Double Cheeseburger',3.49)">🍔 Double Cheese ($3.49)</button>
+    <button onclick="add('McDouble®',2.99)">🍔 McDouble® ($2.99)</button>
+    <button onclick="add('Cheeseburger',2.29)">🍔 Cheeseburger ($2.29)</button>
+    <button onclick="add('Hamburger',1.99)">🍔 Hamburger ($1.99)</button>
+    <button onclick="add('Daily Double®',3.99)">🍔 Daily Double® ($3.99)</button>
+
+    <div class="cat">🍗 Chicken & Fish</div>
+    <button onclick="add('10pc McNuggets®',5.29)">🍗 10pc McNuggets® ($5.29)</button>
+    <button onclick="add('McCrispy® Sandwich',5.49)">🍗 McCrispy® ($5.49)</button>
+    <button onclick="add('McCrispy® Strips',4.99)">🍗 McCrispy® Strips ($4.99)</button>
+    <button onclick="add('McChicken®',2.89)">🍗 McChicken® ($2.89)</button>
+    <button onclick="add('Snack Wrap®',2.49)">🍗 Snack Wrap® ($2.49)</button>
+    <button onclick="add('Filet-O-Fish®',4.79)">🐟 Filet-O-Fish® ($4.79)</button>
+
+    <div class="cat">🍟 Sides & Value</div>
+    <button onclick="add('Large Fries®',4.19)">🍟 Large Fries® ($4.19)</button>
+    <button onclick="add('Medium Fries®',3.49)">🍟 Medium Fries® ($3.49)</button>
+    <button onclick="add('Side Salad',3.19)">🥗 Side Salad ($3.19)</button>
+    <button onclick="add('Apple Slices',1.29)">🍎 Apple Slices ($1.29)</button>
+
+    <div class="cat">🥤 Beverages</div>
+    <button onclick="add('Large Fountain Drink',1.69)">🥤 Large Drink ($1.69)</button>
+    <button onclick="add('McCafé® Coffee',2.29)">☕ McCafé® Coffee ($2.29)</button>
+    <button onclick="add('Refreshers & Teas',2.19)">🍹 Teas & Refreshers ($2.19)</button>
+    <button onclick="add('Milk & Water',1.59)">🥛 Milk & Water ($1.59)</button>
+
+    <div class="cat">🍦 Desserts & Sweets</div>
+    <button onclick="add('McFlurry®',3.89)">🍦 McFlurry® ($3.89)</button>
+    <button onclick="add('Cone / Sundae',1.99)">🍦 Cone / Sundae ($1.99)</button>
+    <button onclick="add('Baked Apple Pie',1.89)">🥧 Baked Apple Pie ($1.89)</button>
+    <button onclick="add('Cookies (Tote)',1.79)">🍪 Cookies ($1.79)</button>
+</div>
+<div class="pane">
+    <h3>Current Order</h3>
+    Name: <input type="text" id="c-name" value="Jim" style="width:75%;padding:3px;"><br>
+    Email: <input type="email" id="c-mail" placeholder="customer@gmail.com" style="width:75%;padding:3px;margin:4px 0;"><br>
+    <input type="checkbox" id="is-del" onchange="toggleDel()"> 🚚 Delivery Order
+    <input type="text" id="addr" placeholder="Address" style="display:none;width:75%;padding:3px;margin-top:4px;">
+    <hr><div id="tape"></div><hr>
+    <div class="row" style="font-size:1.2rem;font-weight:bold;color:#da291c;"><span>Total:</span><span id="total">$0.00</span></div>
+    <div class="row">
+        <button onclick="setPay('cash')" id="b-cash" style="background:#ffbc0d;">💵 Cash</button>
+        <button onclick="setPay('card')" id="b-card">💳 Card</button>
+        <button onclick="setPay('points')" id="b-pts">🪙 Points</button>
+    </div>
+    <div id="cash-box">Paid ($): <input type="number" id="paid" step="0.01" style="width:60px;padding:3px;"></div>
+    <div id="del-warn" style="display:none;color:#856404;font-size:.8rem;font-weight:bold;">⚠️ Collect cash on route.</div>
+    <div id="pts-box" style="display:none;color:#0d47a1;font-weight:bold;"><span id="p-cost">Cost: 0 pts</span></div>
+    <button onclick="checkout()" style="background:#da291c;color:#fff;width:100%;padding:10px;margin-top:10px;border:none;font-size:1rem;">Process Transaction</button>
+    <div id="rcpt-tools" style="display:none;margin-top:8px;background:#e2f0d9;padding:8px;border-radius:4px;"><button onclick="sendGmail()">📬 Gmail</button><button onclick="downloadRcpt()">💾 Download</button></div>
+</div>
+<script>
+    const db={"john":500,"jim":2400,"sam":1500}; let cart=[], payMethod='cash', total=0, receiptStr="", orderName="";
+    function add(n,p){let m=cart.find(c=>c.n===n); m?m.qty++:cart.push({n,p,qty:1}); render()}
+    function render(){document.getElementById('tape').innerHTML=cart.map(i=>`<div class="row"><span>${i.n} x${i.qty}</span><span>$${(i.p*i.qty).toFixed(2)}</span></div>`).join(''); total=cart.reduce((s,i)=>s+(i.p*i.qty),0); document.getElementById('total').innerText=`$${total.toFixed(2)}`; if(payMethod==='points')pUpd()}
+    function toggleDel(){const d=document.getElementById('is-del').checked; document.getElementById('addr').style.display=d?'block':'none'; if(payMethod==='cash'){document.getElementById('cash-box').style.display=d?'none':'block'; document.getElementById('del-warn').style.display=d?'block':'none'}}
+    function pCost(){return Math.ceil(total)*100}
+    function pUpd(){const k=document.getElementById('c-name').value.trim().toLowerCase(); document.getElementById('p-cost').innerText=`Cost: ${pCost()} PTS | Bal: ${db[k]||0} PTS`}
+    function setPay(m){payMethod=m; const d=document.getElementById('is-del').checked; document.getElementById('b-cash').style.background=m==='cash'?'#ffbc0d':''; document.getElementById('b-card').style.background=m==='card'?'#ffbc0d':''; document.getElementById('b-pts').style.background=m==='points'?'#ffbc0d':''; document.getElementById('cash-box').style.display=m==='cash'&&!d?'block':'none'; document.getElementById('del-warn').style.display=m==='cash'&&d?'block':'none'; document.getElementById('pts-box').style.display=m==='points'?'block':'none'; if(m==='points')pUpd()}
+    function lkup(){const s=document.getElementById('s-name').value.trim().toLowerCase(); const res=document.getElementById('lk-res'); if(!s)return; if(db[s]!==undefined)res.innerText=`👤 ${s.toUpperCase()} has ${db[s]} PTS.`; else{res.innerText=`❌ Added new profile (0 PTS).`; db[s]=0}}
+    function checkout(){
+        if(!cart.length)return alert("Order empty!"); orderName=document.getElementById('c-name').value.trim()||"Customer"; const k=orderName.toLowerCase(); const d=document.getElementById('is-del').checked; if(d&&!document.getElementById('addr').value.trim())return alert("Enter address!"); if(db[k]===undefined)db[k]=0; let chg="",msg="";
+        if(payMethod==='points'){let req=pCost(); if(db[k]<req)return alert(`Need ${req} PTS. Balance: ${db[k]}`); db[k]-=req; msg=`POINTS\nFREE\n-${req} PTS`; chg=`Deducted -${req} PTS. New Bal: ${db[k]}`}else{let e=Math.floor(total)*100; if(d&&payMethod==='cash')msg=`DELIVERY\nAddr: ${document.getElementById('addr').value}\nCollect: $${total.toFixed(2)}`; else if(payMethod==='cash'){let amt=parseFloat(document.getElementById('paid').value||0); if(amt<total)return alert("Short cash!"); msg=`CASH\nChange: $${(amt-total).toFixed(2)}`}else msg="CARD\nApproved."; db[k]+=e; chg=`Added +${e} PTS. New Bal: ${db[k]}`}
+        receiptStr=`=== RECEIPT ===\nCustomer: ${orderName}\nTotal: $${total.toFixed(2)}\nStatus: ${msg}\nProfile: ${chg}`; alert(`== SUCCESS ==\n${msg}\n\n📊 UPDATED:\n${chg}`); document.getElementById('rcpt-tools').style.display='block'; document.getElementById('lk-res').innerText=""; cart=[]; document.getElementById('paid').value=''; document.getElementById('addr').value=''; document.getElementById('is-del').checked=false; toggleDel(); render();
+    }
+    function downloadRcpt(){const blob=new Blob([receiptStr],{type:"text/plain"}); const l=document.createElement("a"); l.href=URL.createObjectURL(blob); l.download=`Receipt_${orderName}.txt`; l.click()}
+    function sendGmail(){const e=document.getElementById('c-mail').value.trim(); if(!e)return alert("Enter email!"); window.open(`https://google.com{e}&su=${encodeURIComponent('Receipt')}&body=${encodeURIComponent(receiptStr)}`,'_blank')}
+</script></body></html>
