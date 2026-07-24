@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><title>POS</title><style>body{font-family:sans-serif;display:flex;margin:0;height:100vh;background:#eee}.pane{flex:1.2;padding:15px;overflow-y:auto;background:#fff;border:1px solid #ccc;margin:10px;border-radius:6px}.row{display:flex;justify-content:space-between;margin:4px 0}button{padding:6px;margin:2px;cursor:pointer;font-weight:bold;border-radius:4px;border:1px solid #ccc;background:#f8f9fa;font-size:0.75rem}.cat{background:#333;color:#fff;padding:4px;border-radius:4px;margin:10px 0 5px;font-size:.85rem;font-weight:bold}.subcat{font-size:0.8rem;font-weight:bold;color:#da291c;margin:6px 0 2px 0}</style></head><body>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>POS</title><style>body{font-family:sans-serif;display:flex;margin:0;height:100vh;background:#eee}.pane{flex:1.2;padding:15px;overflow-y:auto;background:#fff;border:1px solid #ccc;margin:10px;border-radius:6px}.row{display:flex;justify-content:space-between;margin:4px 0}button{padding:6px;margin:2px;cursor:pointer;font-weight:bold;border-radius:4px;border:1px solid #ccc;background:#f8f9fa;font-size:0.75rem}.cat{background:#333;color:#fff;padding:4px;border-radius:4px;margin:10px 0 5px;font-size:.85rem;font-weight:bold}.subcat{font-size:0.8rem;font-weight:bold;color:#da291c;margin:6px 0 2px 0}.menu-list{list-style:none;padding:0;margin:0 0 8px 0}.menu-item{font-size:0.8rem;line-height:1.4;margin:3px 0}</style></head><body>
 <div class="pane">
     <div style="background:#e3f2fd;padding:8px;margin-bottom:10px;border-radius:4px;">
         <strong>🔍 Points Lookup:</strong><br>
@@ -7,90 +7,51 @@
         <div id="lk-res" style="margin-top:4px;font-weight:bold;color:#0d47a1;font-size:.8rem;"></div>
     </div>
     <h3>Order Menu</h3>
-    
+
     <div class="cat">🍔 Burgers & Beef</div>
-    <button onclick="add('Big Mac®',5.89)">Big Mac® ($5.89)</button>
-    <div class="subcat">Quarter Pounder® with Cheese</div>
-    <button onclick="add('Quarter Pounder® (Single)',6.19)">Single ($6.19)</button>
-    <button onclick="add('Quarter Pounder® (Double)',7.19)">Double ($7.19)</button>
-    <button onclick="add('Quarter Pounder® (Deluxe)',6.69)">Deluxe ($6.69)</button>
-    <div class="subcat">Bacon Quarter Pounder® with Cheese</div>
-    <button onclick="add('Bacon QPC®',6.89)">Bacon QPC® ($6.89)</button>
-    <div class="subcat">Beef Classics</div>
-    <button onclick="add('Double Cheeseburger',3.49)">Double Cheeseburger ($3.49)</button>
-    <button onclick="add('McDouble®',2.99)">McDouble® ($2.99)</button>
-    <button onclick="add('Cheeseburger',2.29)">Cheeseburger ($2.29)</button>
-    <button onclick="add('Hamburger',1.99)">Hamburger ($1.99)</button>
-    <button onclick="add('Daily Double®',3.99)">Daily Double® ($3.99)</button>
+    <ul class="menu-list">
+        <li class="menu-item">• Big Mac®</li>
+        <li class="menu-item">• Quarter Pounder® with Cheese (Single, Double, or Deluxe)</li>
+        <li class="menu-item">• Bacon Quarter Pounder® with Cheese</li>
+        <li class="menu-item">• Double Cheeseburger</li>
+        <li class="menu-item">• McDouble®</li>
+        <li class="menu-item">• Cheeseburger</li>
+        <li class="menu-item">• Hamburger</li>
+        <li class="menu-item">• Daily Double®</li>
+    </ul>
 
     <div class="cat">🍗 Chicken & Fish</div>
-    <div class="subcat">Chicken McNuggets®</div>
-    <button onclick="add('4pc McNuggets®',2.49)">4-Piece ($2.49)</button>
-    <button onclick="add('6pc McNuggets®',3.29)">6-Piece ($3.29)</button>
-    <button onclick="add('10pc McNuggets®',5.29)">10-Piece ($5.29)</button>
-    <button onclick="add('20pc McNuggets®',7.99)">20-Piece ($7.99)</button>
-    <button onclick="add('40pc McNuggets®',13.99)">40-Piece ($13.99)</button>
-    <div class="subcat">McCrispy® Sandwiches</div>
-    <button onclick="add('McCrispy® (Classic)',5.49)">Classic ($5.49)</button>
-    <button onclick="add('McCrispy® (Spicy)',5.79)">Spicy ($5.79)</button>
-    <button onclick="add('McCrispy® (Deluxe)',6.19)">Deluxe ($6.19)</button>
-    <button onclick="add('McCrispy® (Spicy Deluxe)',6.49)">Spicy Deluxe ($6.49)</button>
-    <div class="subcat">Strips, Wraps & Crispy Chicken</div>
-    <button onclick="add('3pc McCrispy® Strips',4.99)">3-Piece Strips ($4.99)</button>
-    <button onclick="add('4pc McCrispy® Strips',5.99)">4-Piece Strips ($5.99)</button>
-    <button onclick="add('McChicken®',2.89)">McChicken® ($2.89)</button>
-    <button onclick="add('Snack Wrap® (Ranch)',2.49)">Snack Wrap® Ranch ($2.49)</button>
-    <button onclick="add('Snack Wrap® (Spicy)',2.49)">Snack Wrap® Spicy ($2.49)</button>
-    <div class="subcat">Filet-O-Fish®</div>
-    <button onclick="add('Filet-O-Fish® (Single)',4.79)">Single ($4.79)</button>
-    <button onclick="add('Filet-O-Fish® (Double)',5.79)">Double ($5.79)</button>
+    <ul class="menu-list">
+        <li class="menu-item">• Chicken McNuggets® (4, 6, 10, 20, or 40-piece)</li>
+        <li class="menu-item">• McCrispy® (Classic, Spicy, Deluxe, or Spicy Deluxe)</li>
+        <li class="menu-item">• McCrispy® Strips (3 or 4-piece)</li>
+        <li class="menu-item">• McChicken®</li>
+        <li class="menu-item">• Snack Wraps® (Ranch, Spicy)</li>
+        <li class="menu-item">• Filet-O-Fish® (Single or Double)</li>
+    </ul>
 
     <div class="cat">🍟 Sides & Value</div>
-    <div class="subcat">World Famous Fries®</div>
-    <button onclick="add('Kids Fries®',1.49)">Kids ($1.49)</button>
-    <button onclick="add('Small Fries®',2.49)">Small ($2.49)</button>
-    <button onclick="add('Medium Fries®',3.49)">Medium ($3.49)</button>
-    <button onclick="add('Large Fries®',4.19)">Large ($4.19)</button>
-    <button onclick="add('Basket of Fries®',5.29)">Basket ($5.29)</button>
-    <div class="subcat">Salad & Fruit</div>
-    <button onclick="add('Side Salad',3.19)">Side Salad ($3.19)</button>
-    <button onclick="add('Apple Slices',1.29)">Apple Slices ($1.29)</button>
+    <ul class="menu-list">
+        <li class="menu-item">• World Famous Fries® (Kids, Small, Medium, Large, or Basket)</li>
+        <li class="menu-item">• Side Salad (Select locations)</li>
+        <li class="menu-item">• Apple Slices</li>
+    </ul>
 
     <div class="cat">🥤 Beverages</div>
-    <div class="subcat">Fountain Drinks</div>
-    <button onclick="add('Fountain Drink (Coca-Cola®)',1.69)">Coca-Cola® ($1.69)</button>
-    <button onclick="add('Fountain Drink (Diet Coke®)',1.69)">Diet Coke® ($1.69)</button>
-    <button onclick="add('Fountain Drink (Sprite®)',1.69)">Sprite® ($1.69)</button>
-    <button onclick="add('Fountain Drink (Dr Pepper®)',1.69)">Dr Pepper® ($1.69)</button>
-    <button onclick="add('Fountain Drink (Hi-C® Orange)',1.69)">Hi-C® Orange ($1.69)</button>
-    <div class="subcat">McCafé® Coffee & Drinks</div>
-    <button onclick="add('McCafé® Iced Coffee',2.29)">Iced Coffee ($2.29)</button>
-    <button onclick="add('McCafé® Americano',2.49)">Americano ($2.49)</button>
-    <button onclick="add('McCafé® Latte',2.99)">Latte ($2.99)</button>
-    <button onclick="add('McCafé® Cappuccino',2.99)">Cappuccino ($2.99)</button>
-    <button onclick="add('McCafé® Caramel Frappé',3.49)">Caramel Frappé ($3.49)</button>
-    <button onclick="add('McCafé® Mocha Frappé',3.49)">Mocha Frappé ($3.49)</button>
-    <div class="subcat">Refreshers, Teas, Milk & Water</div>
-    <button onclick="add('Sweet Iced Tea',1.99)">Sweet Iced Tea ($1.99)</button>
-    <button onclick="add('Unsweet Iced Tea',1.99)">Unsweet Iced Tea ($1.99)</button>
-    <button onclick="add('Lemonade',2.19)">Lemonade ($2.19)</button>
-    <button onclick="add('Fruit Smoothie',3.29)">Fruit Smoothie ($3.29)</button>
-    <button onclick="add('DASANI® Water',1.59)">DASANI® Water ($1.59)</button>
-    <button onclick="add('Low-Fat Milk Jug',1.59)">Low-Fat Milk Jug ($1.59)</button>
+    <ul class="menu-list">
+        <li class="menu-item">• Fountain Drinks: Coca-Cola®, Diet Coke®, Sprite®, Dr Pepper®, Hi-C® Orange</li>
+        <li class="menu-item">• McCafé® Coffee & Drinks: Iced Coffee, Americano, Latte, Cappuccino, Caramel/Mocha Frappé</li>
+        <li class="menu-item">• Refreshers & Teas: Sweet/Unsweet Iced Tea, Lemonade, Fruit Smoothies</li>
+        <li class="menu-item">• Milk & Water: DASANI® Water, Low-Fat Milk Jugs</li>
+    </ul>
 
     <div class="cat">🍦 Desserts & Sweets</div>
-    <div class="subcat">McFlurry®</div>
-    <button onclick="add('McFlurry® (Oreo®)',3.89)">Oreo® ($3.89)</button>
-    <button onclick="add('McFlurry® (M&M\'s®)',3.89)">M&M's® ($3.89)</button>
-    <button onclick="add('McFlurry® (Seasonal)',4.19)">Seasonal Flavor ($4.19)</button>
-    <div class="subcat">Ice Cream Bakery treats</div>
-    <button onclick="add('Soft Serve Cone',1.99)">Soft Serve Cone ($1.99)</button>
-    <button onclick="add('Sundae',2.49)">Sundae ($2.49)</button>
-    <button onclick="add('Baked Apple Pie',1.89)">Baked Apple Pie ($1.89)</button>
-    <div class="subcat">Chocolate Chip Cookies</div>
-    <button onclick="add('1 Chocolate Chip Cookie',0.99)">1 Cookie ($0.99)</button>
-    <button onclick="add('2 Chocolate Chip Cookies',1.59)">2 Cookies ($1.59)</button>
-    <button onclick="add('13-Cookie Tote',5.99)">13-Cookie Tote ($5.99)</button>
+    <ul class="menu-list">
+        <li class="menu-item">• McFlurry® (Oreo®, M&M's®, seasonal flavors)</li>
+        <li class="menu-item">• Soft Serve Cone / Sundae</li>
+        <li class="menu-item">• Baked Apple Pie</li>
+        <li class="menu-item">• Chocolate Chip Cookies (1, 2, or 13-Cookie Tote)</li>
+    </ul>
 </div>
 <div class="pane">
     <h3>Current Order</h3>
