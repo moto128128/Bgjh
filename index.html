@@ -1,274 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>POS</title>
-  <style>
-    body{font-family:sans-serif;display:flex;margin:0;height:100vh;background:#eee}
-    .pane{flex:1.2;padding:15px;overflow-y:auto;background:#fff;border:1px solid #ccc;margin:10px;border-radius:6px}
-    .row{display:flex;justify-content:space-between;margin:4px 0}
-    button{padding:6px;margin:2px;cursor:pointer;font-weight:bold;border-radius:4px;border:1px solid #ccc;background:#f8f9fa;font-size:0.75rem}
-    .cat{background:#333;color:#fff;padding:4px;border-radius:4px;margin:10px 0 5px;font-size:.85rem;font-weight:bold}
-    .menu-button{display:block;width:100%;text-align:left;margin:4px 0;padding:8px;background:#fff6e5;border:1px solid #f0c36d}
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home | Bright Bite POS</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="pane">
-    <div style="background:#e3f2fd;padding:8px;margin-bottom:10px;border-radius:4px;">
-      <strong>🔍 Points Lookup:</strong><br>
-      <input type="text" id="s-name" placeholder="Name" style="width:55%;padding:3px;">
-      <button onclick="lkup()" style="padding:3px 8px;background:#ffbc0d;">Search</button>
-      <div id="lk-res" style="margin-top:4px;font-weight:bold;color:#0d47a1;font-size:.8rem;"></div>
-    </div>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">🏠</div>
+        <div>
+          <div>Bright Bite POS</div>
+          <div style="font-size:0.9rem;color:var(--muted);font-weight:600;">A polished control center for service teams</div>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a class="nav-link active" href="index.html">Home</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="menu.html">Menu</a>
+        <a class="nav-link" href="order.html">Order</a>
+      </nav>
+    </header>
 
-    <h3>Order Menu</h3>
-
-    <div class="cat">🍔 Burgers & Beef</div>
-    <button class="menu-button">Big Mac®</button>
-    <button class="menu-button">Quarter Pounder® with Cheese (Single, Double, or Deluxe)</button>
-    <button class="menu-button">Bacon Quarter Pounder® with Cheese</button>
-    <button class="menu-button">Double Cheeseburger</button>
-    <button class="menu-button">McDouble®</button>
-    <button class="menu-button">Cheeseburger</button>
-    <button class="menu-button">Hamburger</button>
-    <button class="menu-button">Daily Double®</button>
-
-    <div class="cat">🍗 Chicken & Fish</div>
-    <button class="menu-button">Chicken McNuggets® (4, 6, 10, 20, or 40-piece)</button>
-    <button class="menu-button">McCrispy® (Classic, Spicy, Deluxe, or Spicy Deluxe)</button>
-    <button class="menu-button">McCrispy® Strips (3 or 4-piece)</button>
-    <button class="menu-button">McChicken®</button>
-    <button class="menu-button">Snack Wraps® (Ranch, Spicy)</button>
-    <button class="menu-button">Filet-O-Fish® (Single or Double)</button>
-
-    <div class="cat">🍟 Sides & Value</div>
-    <button class="menu-button">World Famous Fries® (Kids, Small, Medium, Large, or Basket)</button>
-    <button class="menu-button">Side Salad (Select locations)</button>
-    <button class="menu-button">Apple Slices</button>
-
-    <div class="cat">🥤 Beverages</div>
-    <button class="menu-button">Fountain Drinks: Coca-Cola®, Diet Coke®, Sprite®, Dr Pepper®, Hi-C® Orange</button>
-    <button class="menu-button">McCafé® Coffee & Drinks: Iced Coffee, Americano, Latte, Cappuccino, Caramel/Mocha Frappé</button>
-    <button class="menu-button">Refreshers & Teas: Sweet/Unsweet Iced Tea, Lemonade, Fruit Smoothies</button>
-    <button class="menu-button">Milk & Water: DASANI® Water, Low-Fat Milk Jugs</button>
-
-    <div class="cat">🍦 Desserts & Sweets</div>
-    <button class="menu-button">McFlurry® (Oreo®, M&M's®, seasonal flavors)</button>
-    <button class="menu-button">Soft Serve Cone / Sundae</button>
-    <button class="menu-button">Baked Apple Pie</button>
-    <button class="menu-button">Chocolate Chip Cookies (1, 2, or 13-Cookie Tote)</button>
+    <section class="hero">
+      <div class="card">
+        <div class="badge">✨ Edit this page instantly</div>
+        <h1 id="homeHeading">Bright Bite helps you serve faster.</h1>
+        <p id="homeDescription">A friendly, modern point-of-sale experience designed to feel polished and easy to update for every shift.</p>
+        <div class="form-grid">
+          <label>
+            <div style="font-weight:700;margin-bottom:6px;">Headline</div>
+            <input id="heroTitle" class="input" value="Bright Bite helps you serve faster." />
+          </label>
+          <label>
+            <div style="font-weight:700;margin-bottom:6px;">Description</div>
+            <textarea id="heroDescription" class="textarea">A friendly, modern point-of-sale experience designed to feel polished and easy to update for every shift.</textarea>
+          </label>
+          <button class="btn btn-primary" onclick="saveAboutContent()">Save changes</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>At a glance</h3>
+        <div class="metric-grid">
+          <div class="metric"><strong id="stat1">24/7</strong><span>Available</span></div>
+          <div class="metric"><strong id="stat2">100%</strong><span>Editable</span></div>
+          <div class="metric"><strong id="stat3">Fast</strong><span>Checkout</span></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="summary">
+          <strong>Jump to:</strong>
+          <div class="payment-row" style="margin-top:8px;">
+            <a class="btn btn-secondary" href="about.html">About page</a>
+            <a class="btn btn-secondary" href="menu.html">Menu page</a>
+            <a class="btn btn-secondary" href="order.html">Order page</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
-
-  <div class="pane">
-    <h3>Current Order</h3>
-    Name: <input type="text" id="c-name" value="Jim" style="width:75%;padding:3px;"><br>
-    Email: <input type="email" id="c-mail" placeholder="customer@gmail.com" style="width:75%;padding:3px;margin:4px 0;"><br>
-    <input type="checkbox" id="is-del" onchange="toggleDel()"> <label for="is-del">🚚 Delivery Order</label>
-    <input type="text" id="addr" placeholder="Address" style="display:none;width:75%;padding:3px;margin-top:4px;">
-    <hr><div id="tape"></div><hr>
-    <div class="row" style="font-size:1.2rem;font-weight:bold;color:#da291c;"><span>Total:</span><span id="total">$0.00</span></div>
-    <div class="row">
-      <button onclick="setPay('cash')" id="b-cash" style="background:#ffbc0d;">💵 Cash</button>
-      <button onclick="setPay('card')" id="b-card">💳 Card</button>
-      <button onclick="setPay('points')" id="b-pts">🪙 Points</button>
-    </div>
-    <div id="cash-box">Paid ($): <input type="number" id="paid" step="0.01" style="width:60px;padding:3px;"></div>
-    <div id="del-warn" style="display:none;color:#856404;font-size:.8rem;font-weight:bold;">⚠️ Collect cash on route.</div>
-    <div id="pts-box" style="display:none;color:#0d47a1;font-weight:bold;"><span id="p-cost">Cost: 0 pts</span></div>
-    <button onclick="checkout()" style="background:#da291c;color:#fff;width:100%;padding:10px;margin-top:10px;border:none;font-size:1rem;">Process Transaction</button>
-    <div id="rcpt-tools" style="display:none;margin-top:8px;background:#e2f0d9;padding:8px;border-radius:4px;"><button onclick="sendGmail()">📬 Gmail</button><button onclick="downloadRcpt()">💾 Download</button></div>
-  </div>
-
-  <script>
-    const STORAGE_KEY='pos-db-v1';
-    const DEFAULT_DB={"john":500,"jim":2400,"sam":1500};
-    let db=loadDb();
-    let cart=[], payMethod='cash', total=0, receiptStr='', orderName='';
-    const bc=window.BroadcastChannel ? new BroadcastChannel('pos-db') : null;
-
-    function loadDb(){
-      try {
-        const saved=localStorage.getItem(STORAGE_KEY);
-        return saved ? JSON.parse(saved) : {...DEFAULT_DB};
-      } catch {
-        return {...DEFAULT_DB};
-      }
-    }
-
-    function saveDb(){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-      if(bc) bc.postMessage(JSON.stringify(db));
-    }
-
-    if(bc){
-      bc.onmessage=(event)=>{
-        try {
-          const incoming=JSON.parse(event.data);
-          db={...db, ...incoming};
-          pUpd();
-        } catch {}
-      };
-    }
-
-    window.addEventListener('storage',(event)=>{
-      if(event.key===STORAGE_KEY && event.newValue){
-        try {
-          db=JSON.parse(event.newValue);
-          pUpd();
-        } catch {}
-      }
-    });
-
-    const menuPrices={
-      'Big Mac®':5.89,
-      'Quarter Pounder® with Cheese (Single, Double, or Deluxe)':6.19,
-      'Bacon Quarter Pounder® with Cheese':6.89,
-      'Double Cheeseburger':3.49,
-      'McDouble®':2.99,
-      'Cheeseburger':2.29,
-      'Hamburger':1.99,
-      'Daily Double®':3.99,
-      'Chicken McNuggets® (4, 6, 10, 20, or 40-piece)':4.99,
-      'McCrispy® (Classic, Spicy, Deluxe, or Spicy Deluxe)':5.49,
-      'McCrispy® Strips (3 or 4-piece)':4.99,
-      'McChicken®':2.89,
-      'Snack Wraps® (Ranch, Spicy)':2.49,
-      'Filet-O-Fish® (Single or Double)':4.79,
-      'World Famous Fries® (Kids, Small, Medium, Large, or Basket)':2.49,
-      'Side Salad (Select locations)':3.19,
-      'Apple Slices':1.29,
-      'Fountain Drinks: Coca-Cola®, Diet Coke®, Sprite®, Dr Pepper®, Hi-C® Orange':1.69,
-      'McCafé® Coffee & Drinks: Iced Coffee, Americano, Latte, Cappuccino, Caramel/Mocha Frappé':2.29,
-      'Refreshers & Teas: Sweet/Unsweet Iced Tea, Lemonade, Fruit Smoothies':1.99,
-      'Milk & Water: DASANI® Water, Low-Fat Milk Jugs':1.59,
-      'McFlurry® (Oreo®, M&M\'s®, seasonal flavors)':3.89,
-      'Soft Serve Cone / Sundae':2.49,
-      'Baked Apple Pie':1.89,
-      'Chocolate Chip Cookies (1, 2, or 13-Cookie Tote)':0.99
-    };
-
-    function addMenuItem(label){
-      const price=menuPrices[label]||2.49;
-      add(label, price);
-    }
-
-    document.addEventListener('DOMContentLoaded',()=>{
-      document.querySelectorAll('.menu-button').forEach(btn=>{
-        btn.onclick=()=>addMenuItem(btn.textContent.trim());
-      });
-    });
-
-    function add(n,p){
-      const m=cart.find(c=>c.n===n);
-      if(m){m.qty++;} else {cart.push({n,p,qty:1});}
-      render();
-    }
-
-    function render(){
-      document.getElementById('tape').innerHTML=cart.map(i=>`<div class="row"><span>${i.n} x${i.qty}</span><span>$${(i.p*i.qty).toFixed(2)}</span></div>`).join('');
-      total=cart.reduce((s,i)=>s+(i.p*i.qty),0);
-      document.getElementById('total').innerText=`$${total.toFixed(2)}`;
-      if(payMethod==='points') pUpd();
-    }
-
-    function toggleDel(){
-      const d=document.getElementById('is-del').checked;
-      document.getElementById('addr').style.display=d?'block':'none';
-      if(payMethod==='cash'){
-        document.getElementById('cash-box').style.display=d?'none':'block';
-        document.getElementById('del-warn').style.display=d?'block':'none';
-      }
-    }
-
-    function pCost(){return Math.ceil(total)*100;}
-
-    function pUpd(){
-      const k=document.getElementById('c-name').value.trim().toLowerCase();
-      document.getElementById('p-cost').innerText=`Cost: ${pCost()} PTS | Bal: ${db[k]||0} PTS`;
-    }
-
-    function setPay(m){
-      payMethod=m;
-      const d=document.getElementById('is-del').checked;
-      document.getElementById('b-cash').style.background=m==='cash'?'#ffbc0d':'';
-      document.getElementById('b-card').style.background=m==='card'?'#ffbc0d':'';
-      document.getElementById('b-pts').style.background=m==='points'?'#ffbc0d':'';
-      document.getElementById('cash-box').style.display=m==='cash'&&!d?'block':'none';
-      document.getElementById('del-warn').style.display=m==='cash'&&d?'block':'none';
-      document.getElementById('pts-box').style.display=m==='points'?'block':'none';
-      if(m==='points') pUpd();
-    }
-
-    function lkup(){
-      const s=document.getElementById('s-name').value.trim().toLowerCase();
-      const res=document.getElementById('lk-res');
-      if(!s) return;
-      if(db[s]!==undefined){
-        res.innerText=`👤 ${s.toUpperCase()} has ${db[s]} PTS.`;
-      } else {
-        res.innerText='❌ Added new profile (0 PTS).';
-        db[s]=0;
-        saveDb();
-      }
-    }
-
-    function checkout(){
-      if(!cart.length) return alert('Order empty!');
-      orderName=document.getElementById('c-name').value.trim()||'Customer';
-      const k=orderName.toLowerCase();
-      const d=document.getElementById('is-del').checked;
-      if(d&&!document.getElementById('addr').value.trim()) return alert('Enter address!');
-      if(db[k]===undefined) db[k]=0;
-
-      let chg='', msg='';
-      if(payMethod==='points'){
-        const req=pCost();
-        if(db[k]<req) return alert(`Need ${req} PTS. Balance: ${db[k]}`);
-        db[k]-=req;
-        saveDb();
-        msg=`POINTS\nFREE\n-${req} PTS`;
-        chg=`Deducted -${req} PTS. New Bal: ${db[k]}`;
-      } else {
-        const e=Math.floor(total)*100;
-        if(d&&payMethod==='cash'){
-          msg=`DELIVERY\nAddr: ${document.getElementById('addr').value}\nCollect: $${total.toFixed(2)}`;
-        } else if(payMethod==='cash'){
-          const amt=parseFloat(document.getElementById('paid').value||0);
-          if(amt<total) return alert('Short cash!');
-          msg=`CASH\nChange: $${(amt-total).toFixed(2)}`;
-        } else {
-          msg='CARD\nApproved.';
-        }
-        db[k]+=e;
-        saveDb();
-        chg=`Added +${e} PTS. New Bal: ${db[k]}`;
-      }
-
-      receiptStr=`=== RECEIPT ===\nCustomer: ${orderName}\nTotal: $${total.toFixed(2)}\nStatus: ${msg}\nProfile: ${chg}`;
-      alert(`== SUCCESS ==\n${msg}\n\n📊 UPDATED:\n${chg}`);
-      document.getElementById('rcpt-tools').style.display='block';
-      document.getElementById('lk-res').innerText='';
-      cart=[];
-      document.getElementById('paid').value='';
-      document.getElementById('addr').value='';
-      document.getElementById('is-del').checked=false;
-      toggleDel();
-      render();
-    }
-
-    function downloadRcpt(){
-      const blob=new Blob([receiptStr],{type:'text/plain'});
-      const l=document.createElement('a');
-      l.href=URL.createObjectURL(blob);
-      l.download=`Receipt_${orderName}.txt`;
-      l.click();
-    }
-
-    function sendGmail(){
-      const e=document.getElementById('c-mail').value.trim();
-      if(!e) return alert('Enter email!');
-      window.open(`https://google.com?to=${e}&su=${encodeURIComponent('Receipt')}&body=${encodeURIComponent(receiptStr)}`,'_blank');
-    }
-  </script>
+  <div id="toast" class="toast">Saved</div>
+  <script src="app.js"></script>
 </body>
 </html>
