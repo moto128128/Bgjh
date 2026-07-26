@@ -12,6 +12,13 @@ const defaultContent = {
   stat3: 'Fast'
 };
 
+const defaultNavigation = [
+  { label: 'Home', href: 'index.html' },
+  { label: 'About', href: 'about.html' },
+  { label: 'Menu', href: 'menu.html' },
+  { label: 'Order', href: 'order.html' }
+];
+
 const defaultMenu = [
   { name: 'Signature Burger', price: 8.99, description: 'A juicy double stack with crisp pickles and house sauce.' },
   { name: 'Crispy Wrap', price: 7.49, description: 'Crispy chicken with fresh slaw and a light drizzle.' },
@@ -24,6 +31,7 @@ const defaultPoints = { john: 540, jamie: 1200, sam: 760 };
 let content = loadJson(STORAGE_KEYS.content, defaultContent);
 let menu = loadJson(STORAGE_KEYS.menu, defaultMenu);
 let points = loadJson(STORAGE_KEYS.points, defaultPoints);
+let navigation = loadJson('brightbite-navigation-v1', defaultNavigation);
 let cart = [];
 let paymentMethod = 'cash';
 let receiptText = '';
@@ -72,7 +80,30 @@ function saveAboutContent() {
   content.heroTitle = document.getElementById('heroTitle').value.trim() || defaultContent.heroTitle;
   content.heroDescription = document.getElementById('heroDescription').value.trim() || defaultContent.heroDescription;
   saveJson(STORAGE_KEYS.content, content);
+  renderHome();
   showToast('Content saved');
+}
+
+function saveNavigationMenu() {
+  navigation = [
+    { label: document.getElementById('navLabel1').value.trim() || 'Home', href: document.getElementById('navHref1').value.trim() || 'index.html' },
+    { label: document.getElementById('navLabel2').value.trim() || 'About', href: document.getElementById('navHref2').value.trim() || 'about.html' },
+    { label: document.getElementById('navLabel3').value.trim() || 'Menu', href: document.getElementById('navHref3').value.trim() || 'menu.html' },
+    { label: document.getElementById('navLabel4').value.trim() || 'Order', href: document.getElementById('navHref4').value.trim() || 'order.html' }
+  ];
+  saveJson('brightbite-navigation-v1', navigation);
+  renderNavigation();
+  showToast('Menu updated');
+}
+
+function renderNavigation() {
+  const nav = document.querySelector('.nav-links');
+  if (!nav) return;
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  nav.innerHTML = navigation.map((item) => {
+    const isActive = currentPage === item.href || (currentPage === '' && item.href === 'index.html');
+    return `<a class="nav-link ${isActive ? 'active' : ''}" href="${item.href}">${item.label}</a>`;
+  }).join('');
 }
 
 function renderMenu() {
@@ -269,6 +300,7 @@ function toggleDeliveryUi() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  renderNavigation();
   renderHome();
   renderMenu();
   renderOrder();
